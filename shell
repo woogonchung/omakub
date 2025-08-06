@@ -1,0 +1,38 @@
+# History control
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=32768
+HISTFILESIZE="${HISTSIZE}"
+
+# Autocompletion
+source /usr/share/bash-completion/bash_completion
+
+# Set complete path
+export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omakub/bin:$PATH"
+set +h
+
+# Define manh function for --help argument
+manh() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: manh <command> [subcommands...]" >&2
+    return 1
+  fi
+
+  local cmd=("$@")
+
+  # Try -h first
+  if "${cmd[@]}" -h >/dev/null 2>&1; then
+    "${cmd[@]}" -h | batcat
+  elif "${cmd[@]}" --help >/dev/null 2>&1; then
+    "${cmd[@]}" --help | batcat
+  else
+    echo "No help option (-h or --help) available for: ${cmd[*]}" >&2
+    return 2
+  fi
+}
+
+eval "$(mise activate bash)"
+
+export OMAKUB_PATH="/home/$USER/.local/share/omakub"
+export MANPATH="$HOME/man:$MANPATH"
+

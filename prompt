@@ -1,0 +1,12 @@
+# Technicolor dreams
+force_color_prompt=yes
+color_prompt=yes
+
+# Simple prompt with path in the window/pane title and caret for typing line
+PS1=$'\uf0a9 '
+PS1="\[\e]0;\w\a\]$PS1"
+PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 "(%s)")'; 
+# PS1='${PS1_CMD1} \w % '
+# PS1='\[\e[014m${PS1_CMD1} \w %\]\e[00m '
+PS1='\[\e[0;36m\]\u@\h:\w\$ \[\e[0m\]'
+
